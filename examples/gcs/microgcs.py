@@ -11,7 +11,7 @@ from __future__ import print_function
 
 from dronekit import connect, VehicleMode
 from pymavlink import mavutil
-from Tkinter import *
+from tkinter import *
 
 # The tkinter root object
 global root
@@ -42,7 +42,10 @@ def setMode(mode):
 
 
 def updateGUI(label, value):
-    label['text'] = value
+    # DroneKit fires attribute callbacks on its own MAVLink thread, and Tkinter
+    # widgets may only be touched from the thread running mainloop(), so hand the
+    # update back to that thread instead of writing to the widget here.
+    root.after(0, lambda: label.configure(text=value))
 
 def addObserverAndInit(name, cb):
     """We go ahead and call our observer once at startup to get an initial value"""
