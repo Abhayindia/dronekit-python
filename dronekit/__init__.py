@@ -2359,6 +2359,11 @@ class Vehicle(HasObservers):
 
     def play_tune(self, tune):
         '''Play a tune on the vehicle'''
+        if not hasattr(self.message_factory, 'play_tune_encode'):
+            raise APIException(
+                'play_tune requires MAVLink 2. This connection negotiated '
+                'MAVLink 1, whose dialects have no PLAY_TUNE message, so the '
+                'tune cannot be sent.')
         msg = self.message_factory.play_tune_encode(0, 0, tune)
         self.send_mavlink(msg)
 
