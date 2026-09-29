@@ -42,9 +42,6 @@ def setMode(mode):
 
 
 def updateGUI(label, value):
-    # DroneKit fires attribute callbacks on its own MAVLink thread, and Tkinter
-    # widgets may only be touched from the thread running mainloop(), so hand the
-    # update back to that thread instead of writing to the widget here.
     root.after(0, lambda: label.configure(text=value))
 
 def addObserverAndInit(name, cb):
