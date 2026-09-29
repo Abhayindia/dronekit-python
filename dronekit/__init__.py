@@ -49,7 +49,6 @@ import time
 
 import monotonic
 
-# Python 2 had a builtin `basestring`; Python 3 does not.
 if sys.version_info.major >= 3:
     basestring = str
 
